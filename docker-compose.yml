@@ -1,0 +1,19 @@
+ldap:
+    build: . 
+    container_name: ldap
+    ports:
+        - "389:389"
+    working_dir: /data
+    env_file:
+        - ./local.env
+
+ldapload:
+    build: .
+    container_name: ldapload
+    links:
+        - ldap
+    env_file:
+        - ./local.env
+    working_dir: /data
+    
+    command: bash -c "sleep 10 && /data/load_ldap.sh" 
