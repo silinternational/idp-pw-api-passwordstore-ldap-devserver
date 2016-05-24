@@ -4,6 +4,8 @@ RUN yum install -y nc which curl \
     && curl -o /usr/local/bin/whenavail https://bitbucket.org/silintl/docker-whenavail/raw/master/whenavail \
     && chmod a+x /usr/local/bin/whenavail 
     
+COPY idp.pw.api.* /etc/openldap/certs/
+
 COPY *.schema /etc/openldap/schema/
 COPY gisGroup.ldif /etc/openldap/schema/
 COPY gisPerson.ldif /etc/openldap/schema/
