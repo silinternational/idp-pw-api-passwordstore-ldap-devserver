@@ -1,5 +1,5 @@
 ldap:
-    build: . 
+    build: .
     container_name: ldap
     ports:
         - "389:389"
@@ -15,5 +15,18 @@ ldapload:
     env_file:
         - ./local.env
     working_dir: /data
-    
-    command: bash -c "sleep 10 && /data/load_ldap.sh" 
+
+    command: bash -c "sleep 10 && /data/load_ldap.sh"
+
+web:
+    image: silintl/phpldapadmin:latest
+    container_name: web
+    links:
+        - ldap
+    ports:
+        - 80
+    environment:
+      DISPLAY_NAME: Password Store
+      HOST: ldap
+      PORT: 389
+      BASE: dc=acme,dc=org
